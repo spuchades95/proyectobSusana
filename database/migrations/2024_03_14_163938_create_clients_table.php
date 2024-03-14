@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-      /*  Schema::create('base_berths', function (Blueprint $table) {
-            Schema::dropIfExists('base_berths');
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Amarre_id');
-            $table->foreign('Amarre_id')->references('id')->on('berths')->onDelete('cascade')->onUpdate('cascade');
+           $table->unsignedBigInteger('Usuario_id');     
+           $table->foreign('Usuario_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade'); 
+           $table->dateTime('FechaNacimiento')->nullable();
+           $table->softDeletes();
             $table->timestamps();
         });
-        */
     }
 
     /**
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-       // Schema::dropIfExists('berths');
+        Schema::dropIfExists('clients');
     }
 };

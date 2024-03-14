@@ -70,6 +70,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(Administrative::class);
     }
+    public function cliente()
+    {
+        return $this->hasOne(Client::class,'Usuario_id');
+    }
+    public function gestor()
+    {
+        return $this->hasOne(Manager::class,'Usuario_id');
+    }
     
     public function guardamuelles()
     {

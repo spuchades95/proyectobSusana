@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-      /*  Schema::create('base_berths', function (Blueprint $table) {
-            Schema::dropIfExists('base_berths');
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('Amarre_id');
-            $table->foreign('Amarre_id')->references('id')->on('berths')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('Nombre');
+            $table->decimal('Precio_unico', 10, 2); 
+            $table->decimal('Precio_mensual', 10, 2); 
+            $table->string('Mensaje_unico');
+            $table->string('Mensaje_mensual');
+            $table->string('Descripcion');
+            $table->softDeletes();
             $table->timestamps();
         });
-        */
     }
 
     /**
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-       // Schema::dropIfExists('berths');
+        Schema::dropIfExists('services');
     }
 };

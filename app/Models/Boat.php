@@ -34,6 +34,9 @@ class Boat extends Model
     {
         return $this->belongsToMany(BaseBerth::class, 'Rentals', 'PlazaBase_id', 'Embarcacion_id');
     }
-
+    public function cliente()
+    {
+        return $this->belongsTo(Client::class, 'Titular');
+    }
 
 }

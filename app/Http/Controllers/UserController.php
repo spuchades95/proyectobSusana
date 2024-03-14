@@ -7,11 +7,13 @@ use App\Models\User;
 use App\Models\DockWorker;
 use App\Models\Administrative;
 use App\Models\CivilGuard;
+use App\Models\Client;
 use App\Models\Concessionaire;
 
 
 use Illuminate\Support\Facades\Log;
 use App\Models\Facility;
+use App\Models\Manager;
 use App\Models\Role;
 
 
@@ -181,6 +183,17 @@ class UserController extends Controller
                 $civil->Usuario_id = $usuario_id;
                 $civil->save();
                 break;
+                case "5":
+                    $manager = new Manager();
+                    $manager->Usuario_id = $usuario_id;
+                    $manager->save();
+                    break;
+                case "6":
+                    $client = new Client();
+                    $client->Usuario_id = $usuario_id;
+                    $client->save();
+                    break;
+
             default:
                 break;
         }
