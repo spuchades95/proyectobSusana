@@ -12,7 +12,22 @@ class HireController extends Controller
      */
     public function index()
     {
-        //
+        $pedidos= Hire::join('services','services.id','=','hires.Servicio_id')
+        ->join('clients', 'clients.id', '=', 'hires.Cliente_id')
+        ->join('users', 'users.id', '=', 'clients.Usuario_id')
+        ->join('tickets', 'tickets.id', '=', 'tickets.Servicio_id')
+    
+        ->select(
+            'hires.FechaContratacion',
+            'hires.Estado',
+            'tickets.Total As Precio',
+            'tickets.Numero_Ticket AS Ticket',
+            'services.Nombre AS Servicio',
+            'users.NombreCompleto AS Cliente',
+        
+        )
+        ->get();
+        return view('pedidos.index')->with('pedidos', $pedidos);
     }
 
     /**
@@ -22,6 +37,26 @@ class HireController extends Controller
     {
         //
     }
+
+  
+public function paratablaPedidos(){
+    $pedidos= Hire::join('services','services.id','=','hires.Servicio_id')
+    ->join('clients', 'clients.id', '=', 'hires.Cliente_id')
+    ->join('users', 'users.id', '=', 'clients.Usuario_id')
+    ->join('tickets', 'tickets.id', '=', 'tickets.Servicio_id')
+
+    ->select(
+        'hires.FechaContratacion',
+        'hires.Estado',
+        'tickets.Total As Precio',
+        'tickets.Numero_Ticket AS Ticket',
+        'services.Nombre AS Servicio',
+        'users.NombreCompleto AS Cliente',
+    
+    )
+    ->get();
+    return view('pedidos.index')->with('pedidos', $pedidos);
+}
 
     /**
      * Store a newly created resource in storage.

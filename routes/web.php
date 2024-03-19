@@ -15,7 +15,9 @@ use App\Http\Controllers\TransitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BaseBerthController;
 use App\Http\Controllers\BerthController;
+use App\Http\Controllers\HireController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PanelController;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -35,10 +37,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/panel', function () {
-    return view('instalaciones.index');
-})->middleware(['auth', 'verified'])->name('panel');
-
 
 Route::middleware(['auth', 'verified', 'checkUserRole'])->group(function () {
     Route::put('/amarres/{amarre}', [BerthController::class, 'update'])->name('amarres.update');
@@ -49,6 +47,8 @@ Route::middleware(['auth', 'verified', 'checkUserRole'])->group(function () {
     Route::post('pantalanes/createdos', [DockController::class, 'storedos'])->name('pantalanes.storedos');
     Route::get('/instalaciones/opcionpantalanes', [FacilityController::class, 'opcionPantalanes'])->name('instalaciones.opcionpantalanes');
     Route::get('/pantalanes/opcionamarres', [DockController::class, 'opcionAmarres'])->name('pantalanes.opcionamarres');
+    Route::resource('servicios',ServiceController::class);
+    Route::resource('pedidos',HireController::class);
     Route::resource('amarres', BerthController::class);
     Route::resource('instalaciones', FacilityController::class);
     Route::resource('pantalanes', DockController::class);
@@ -58,5 +58,6 @@ Route::middleware(['auth', 'verified', 'checkUserRole'])->group(function () {
     Route::resource('usuarios', UserController::class);
     Route::get('/panel', PanelController::class)->name('panel.index');
 });
+
 
 require __DIR__.'/auth.php';

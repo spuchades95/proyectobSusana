@@ -17,6 +17,7 @@ class Service extends Model
         'Mensaje_mensual',
         'Mensaje_unico',
         'Descripcion',
+        'Imagen',
     ]; 
 
     public function contrata()

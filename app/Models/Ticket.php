@@ -14,6 +14,7 @@ class Ticket extends Model
         'Total',
         'Estado',
         'Servicio_id',
+        'Numero_Ticket'
      
     ];    
 

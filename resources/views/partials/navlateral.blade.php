@@ -1,9 +1,18 @@
 <div class="azul500 col-md-2 d-flex flex-column align-items-center">
     <img alt="Bootstrap Image Preview" src="/image/Group.svg" class="logo" />
+   
+    @if(auth()->check() && auth()->user()->Rol_id == 1)
     <a href="{{ route('panel.index') }}" class=" mt-5 boton dashboard">PANEL DE CONTROL</a>
     <a href="{{ route('roles.index') }}" class=" mt-5 boton rol">GESTIÓN ROLES</a>
     <a href="{{ route('usuarios.index') }}" class=" mt-5 boton user">GESTIÓN USUARIOS</a>
     <a href="{{ route('instalaciones.index') }}" class=" mt-5 boton ins">GESTIÓN INSTALACIONES</a>
+    <a href="{{ route('servicios.index') }}" class=" mt-5 boton serv">GESTIÓN DE SERVCIOS</a> 
+    <a href="{{ route('pedidos.index') }}" class=" mt-5 boton pedi">GESTIÓN DE PEDIDOS</a> 
+    @elseif(auth()->check() && auth()->user()->Rol_id == 5)
+        <a href="{{ route('servicios.index') }}" class=" mt-5 boton serv">GESTIÓN DE SERVCIOS</a> 
+        <a href="{{ route('pedidos.index') }}" class=" mt-5 boton pedi">GESTIÓN DE PEDIDOS</a> 
+    
+    @endif
 </div>
 <style>
     :root {
@@ -130,11 +139,39 @@
         background-image: url('/image/instIcon.svg');
 
     }
+    .serv {
+        background-image: url('/image/servicio.svg');
+
+    }
+    .pedi {
+        background-image: url('/image/pedido.svg');
+
+    }
 
     .dashboard {
         background-image: url('/image/control.svg');
 
     }
+
+    .pedi:hover,
+    .pedi:focus,
+    .pedi:active {
+        background-image: url('/image/pedidos.svg');
+
+    }
+
+    .serv:hover,
+    .serv:focus,
+    .serv:active {
+        background-image: url('/image/servicios.svg');
+
+    }
+
+
+
+
+
+
 
     .rol:hover,
     .rol:focus,

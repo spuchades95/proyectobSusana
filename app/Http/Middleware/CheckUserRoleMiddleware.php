@@ -16,11 +16,10 @@ class CheckUserRoleMiddleware
     public function handle(Request $request, Closure $next): Response
     {
        
-        if (auth()->check() && auth()->user()->Rol_id == 1) {
+        if (auth()->check() && (auth()->user()->Rol_id == 1 || auth()->user()->Rol_id == 5)) {
             return $next($request);
         }
 
-        // Si el usuario no tiene el rol adecuado, se aborta la solicitud con un error 403
         abort(403, 'No tienes permisos para acceder a esta página.');
     
     }

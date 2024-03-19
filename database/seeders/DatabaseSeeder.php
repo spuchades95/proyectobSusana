@@ -60,6 +60,8 @@ class DatabaseSeeder extends Seeder
     // foreach ($usersWithRoleThree as $user) {
     //   \App\Models\DockWorker::factory()->create(['Usuario_id' => $user->id]);
     // }
+    \App\Models\Hire::factory(3)->create();
+    \App\Models\Ticket::factory(3)->create();
     // \App\Models\TransitBoat::factory(3)->create();
     // \App\Models\TransitBoat::factory(1)->create();
     // \App\Models\TransitBoat::factory(3)->create();

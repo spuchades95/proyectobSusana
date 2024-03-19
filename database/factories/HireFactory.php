@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Client;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,12 @@ class HireFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'Estado' => $this->faker->randomElement(['Activo', 'Completado', 'Cancelado']),
+            'FechaContratacion' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'FechaFinalizacion' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'Servicio_id' => Service::inRandomOrder()->value('id'),
+            'Cliente_id' => Client::inRandomOrder()->value('id'),
+            
         ];
     }
 }

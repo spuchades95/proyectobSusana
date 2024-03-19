@@ -90,10 +90,6 @@
         color: #f5f6fd !important;
         margin-left: 10px;
 
-
-
-
-
     }
 
     .btn {
