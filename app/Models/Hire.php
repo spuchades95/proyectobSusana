@@ -15,6 +15,7 @@ class Hire extends Model
         'FechaFinalizacion',
         'Servicio_id ',
         'Cliente_id ',
+        'Ticket_id'
     ];
 
     public function servicio()
@@ -26,6 +27,8 @@ class Hire extends Model
         return $this->belongsTo(Client::class,'Cliente_id');
     }
 
-
+    public function ticket() {
+        return $this->belongsTo(Ticket::class,'Ticket_id');
+    }
 
 }

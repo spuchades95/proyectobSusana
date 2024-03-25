@@ -13,13 +13,12 @@ class Ticket extends Model
         'FechaEmision',
         'Total',
         'Estado',
-        'Servicio_id',
         'Numero_Ticket'
      
     ];    
 
-    public function servicio()
-    {
-        return $this->belongsTo(Service::class, 'Servicio_id');
+    public function ticketcontratado() {
+        return $this->belongsTo(Hire::class, 'Ticket_id');
     }
+
 }

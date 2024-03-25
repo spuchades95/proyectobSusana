@@ -36,7 +36,9 @@ class Client extends User
     {
         return $this->belongsToMany(Service::class, 'Hires', 'Cliente_id', 'Servicio_id');
     }
-
-
+    public function tickets()
+    {
+        return $this->hasManyThrough(Ticket::class, Hire::class, 'Hires', 'Cliente_id', 'Ticket_id');
+    }
 
 }

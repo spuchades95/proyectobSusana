@@ -25,13 +25,16 @@
         </thead>
         <tbody>
             @foreach ($pedidos as $pedido)
-            <tr>
+
+            <tr data-id="{{ $pedido->id }}">
+
                 <td>{{ $pedido->Cliente }}</td>
                 <td>{{ $pedido->Servicio }}</td>
-                <td>{{ $pedido->FechaContratacion }}</td>
+                <td>{{ date('d-m-Y', strtotime($pedido->FechaContratacion)) }}</td>
                 <td>{{ $pedido->Estado }}</td>
-                <td>{{ $pedido->Precio }}</td>
+                <td>{{ $pedido->Precio }} €</td>
                 <td>{{ $pedido->Ticket }}</td>
+
 
 
             </tr>
@@ -45,8 +48,8 @@
     $(document).ready(function() {
         $('#example tbody').on('click', 'tr', function() {
             var servicioID = $(this).data('id');
-
-            window.location.href = "{{ route('servicios.show', ['servicio' => ':id']) }}".replace(':id', servicioID);
+            console.log(servicioID);
+            window.location.href = "{{ route('pedidos.show', ['pedido' => ':id']) }}".replace(':id', servicioID);
         });
 
 

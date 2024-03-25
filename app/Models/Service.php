@@ -29,10 +29,5 @@ class Service extends Model
         return $this->belongsToMany(Manager::class, 'Manages', 'Gestor_id', 'Servicio_id');
     }
 
-    public function tickets()
-    {
-        return $this->hasMany(Ticket::class, 'Servicio_id');
-    }
-
 
 }

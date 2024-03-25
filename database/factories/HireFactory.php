@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Client;
 use App\Models\Service;
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,7 @@ class HireFactory extends Factory
             'FechaFinalizacion' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'Servicio_id' => Service::inRandomOrder()->value('id'),
             'Cliente_id' => Client::inRandomOrder()->value('id'),
-            
+            'Ticket_id' => Ticket::inRandomOrder()->value('id'),
         ];
     }
 }
