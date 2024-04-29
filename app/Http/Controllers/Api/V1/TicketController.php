@@ -8,14 +8,13 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
-        //
+        $tickets = Ticket::all();
+        return response()->json($tickets);
     }
-    public function generaNumero()
+    private function generaNumero()
     {
         $ultimoTicket = Ticket::max('Numero_Ticket');
 
@@ -24,41 +23,37 @@ class TicketController extends Controller
         } else {
             $nuevoTicket = 10000;
         }
-        $ticket = new Ticket();
-        $ticket->Numero_Ticket = $nuevoTicket;
-        $ticket->save();
 
-        return response()->json(['numero_ticket' => $nuevoTicket], 200);
+        return $nuevoTicket;
     }
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'FechaEmision' => 'required|date',
+            'Total' => 'required|numeric|min:0',
+            'Estado' => 'required|string',
+        ]);
+
+        $numeroTicket = $this->generaNumero();
+
+
+        $ticketData = $request->all();
+        $ticketData['Numero_Ticket'] = $numeroTicket;
+        $ticket = Ticket::create($ticketData);
+
+        return response()->json($ticket, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket)
+    public function show($id)
     {
-        //
+        $ticket = Ticket::findOrFail($id);
+        return response()->json($ticket);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Ticket $ticket)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ticket $ticket)
-    {
-        //
-    }
 }

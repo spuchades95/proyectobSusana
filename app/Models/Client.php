@@ -13,7 +13,7 @@ class Client extends User
     protected $fillable = [
         'FechaNacimiento',
         'Usuario_id',
-       
+        'Genero'
     ];    
 
 

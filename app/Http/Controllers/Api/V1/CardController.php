@@ -13,7 +13,8 @@ class CardController extends Controller
      */
     public function index()
     {
-        //
+        $cards = Card::all();
+        return response()->json($cards);
     }
 
     /**
@@ -21,30 +22,51 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $card = Card::create($request->all());
+        return response()->json($card, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Card $card)
+    public function show($id)
     {
-        //
+        $card = Card::find($id);
+
+        if (!$card) {
+            return response()->json(['message' => 'Tarjeta no encontrada'], 404);
+        }
+
+        return response()->json($card);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Card $card)
+    public function update(Request $request, $id)
     {
-        //
+        $card = Card::find($id);
+
+        if (!$card) {
+            return response()->json(['message' => 'Tarjeta no encontrada'], 404);
+        }
+
+        $card->update($request->all());
+        return response()->json($card);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Card $card)
+    public function destroy($id)
     {
-        //
+        $card = Card::find($id);
+
+        if (!$card) {
+            return response()->json(['message' => 'Tarjeta no encontrada'], 404);
+        }
+
+        $card->delete();
+        return response()->json(['message' => 'Tarjeta eliminada']);
     }
 }

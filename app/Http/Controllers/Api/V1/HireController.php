@@ -27,9 +27,22 @@ class HireController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Hire $hire)
+    public function show( $id)
     {
-        //
+         $pedido = Hire::with(['cliente.user', 'servicio', 'ticket'])->findOrFail($id);
+
+          $pedidoData = [
+             'id' => $pedido->id,
+             'FechaContratacion' => $pedido->FechaContratacion,
+             'Estado' => $pedido->Estado,
+             'Precio' => $pedido->ticket->Total,
+             'NumeroTicket' => $pedido->ticket->Numero_Ticket,
+             'Servicio' => $pedido->servicio->Nombre,
+             'Cliente' => $pedido->cliente->user->NombreCompleto,
+           ];
+ 
+         return response()->json($pedidoData);
+     
     }
 
     /**

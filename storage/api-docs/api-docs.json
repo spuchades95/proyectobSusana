@@ -1,0 +1,224 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Services",
+        "description": "Mostando la Lista de URI's de mi API",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "localhost:8000"
+        }
+    ],
+    "paths": {
+        "/api/clients": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Obtener todos los clientes",
+                "operationId": "3b258028243f66d4d379610f6ba91b9a",
+                "responses": {
+                    "200": {
+                        "description": "Listado de clientes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "FechaNacimiento": {
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "Genero": {
+                                                "type": "string"
+                                            },
+                                            "Usuario": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "NombreCompleto": {
+                                                        "type": "string"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "format": "email"
+                                                    },
+                                                    "Habilitado": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "NombreUsuario": {
+                                                        "type": "string"
+                                                    },
+                                                    "Instalacion_id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "DNI": {
+                                                        "type": "string"
+                                                    },
+                                                    "Telefono": {
+                                                        "type": "string"
+                                                    },
+                                                    "Direccion": {
+                                                        "type": "string"
+                                                    },
+                                                    "Descripcion": {
+                                                        "type": "string"
+                                                    },
+                                                    "Rol_id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "Causa": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    }
+                }
+            }
+        },
+        "/api/v1/services": {
+            "get": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Obtener todos los servicios",
+                "operationId": "19339d2b804c5bbb3a7d51826c6a5e9c",
+                "responses": {
+                    "200": {
+                        "description": "Lista de todos los servicios",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID único del servicio",
+                                                        "type": "integer"
+                                                    },
+                                                    "Nombre": {
+                                                        "description": "Nombre del servicio",
+                                                        "type": "string"
+                                                    },
+                                                    "Precio_unico": {
+                                                        "description": "Precio único del servicio",
+                                                        "type": "number",
+                                                        "format": "float"
+                                                    },
+                                                    "Precio_mensual": {
+                                                        "description": "Precio mensual del servicio",
+                                                        "type": "number",
+                                                        "format": "float"
+                                                    },
+                                                    "Mensaje_unico": {
+                                                        "description": "Mensaje único del servicio",
+                                                        "type": "string"
+                                                    },
+                                                    "Mensaje_mensual": {
+                                                        "description": "Mensaje mensual del servicio",
+                                                        "type": "string"
+                                                    },
+                                                    "Descripcion": {
+                                                        "description": "Descripción del servicio",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/services/{service_id}": {
+            "get": {
+                "tags": [
+                    "Servicios"
+                ],
+                "summary": "Obtener un servicio por su ID",
+                "operationId": "3e51fe89beba8bfc194fef17a4e6b658",
+                "parameters": [
+                    {
+                        "name": "service_id",
+                        "in": "path",
+                        "description": "ID del servicio a obtener",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del servicio",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID único del servicio",
+                                            "type": "integer"
+                                        },
+                                        "Nombre": {
+                                            "description": "Nombre del servicio",
+                                            "type": "string"
+                                        },
+                                        "Precio_unico": {
+                                            "description": "Precio único del servicio",
+                                            "type": "number",
+                                            "format": "float"
+                                        },
+                                        "Precio_mensual": {
+                                            "description": "Precio mensual del servicio",
+                                            "type": "number",
+                                            "format": "float"
+                                        },
+                                        "Mensaje_unico": {
+                                            "description": "Mensaje único del servicio",
+                                            "type": "string"
+                                        },
+                                        "Mensaje_mensual": {
+                                            "description": "Mensaje mensual del servicio",
+                                            "type": "string"
+                                        },
+                                        "Descripcion": {
+                                            "description": "Descripción del servicio",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Servicio no encontrado"
+                    }
+                }
+            }
+        }
+    }
+}
