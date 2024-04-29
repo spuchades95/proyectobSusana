@@ -33,6 +33,7 @@
                 <label for="Estado">Estado del servicio:</label>
                 <select name="Estado" id="Estado" class="form-control" required>
                     <option value="">Selecciona el estado del pedido</option>
+                    <option value="Procesando" @if($pedido->Estado === 'Procesando') selected @endif>Procesando</option>
                     <option value="Activo" @if($pedido->Estado === 'Activo') selected @endif>Activo</option>
                     <option value="Completado" @if($pedido->Estado === 'Completado') selected @endif>Completado</option>
                     <option value="Cancelado" @if($pedido->Estado === 'Cancelado') selected @endif>Cancelado</option>
