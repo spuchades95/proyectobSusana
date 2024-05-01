@@ -32,6 +32,7 @@ public function index()
         'users.NombreCompleto AS Cliente'
     )->where('hires.Estado', '=', 'Activo' )
     ->orWhere('hires.Estado', '=', 'Completado')
+    ->orWhere('hires.Estado', '=', 'Procesando')
     ->get();
   
        return view('pedidos.index', compact('pedidos'));
@@ -45,7 +46,6 @@ public function index()
     public function show(string $id)
     {
 
-        
         $pedido = Hire::findOrFail($id);
         $cliente = $pedido->cliente;
         $servicio= $pedido->servicio;

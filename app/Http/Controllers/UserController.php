@@ -120,12 +120,12 @@ class UserController extends Controller
                 $civil->Usuario_id = $usuario_id;
                 $civil->save();
                 break;
-                case "5":
+            case "5":
                     $manager = new Manager();
                     $manager->Usuario_id = $usuario_id;
                     $manager->save();
                     break;
-                case "6":
+            case "6":
                     $client = new Client();
                     $client->Usuario_id = $usuario_id;
                     $client->save();

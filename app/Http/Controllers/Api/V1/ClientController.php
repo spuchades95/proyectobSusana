@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
 class ClientController extends Controller
 {
    /**
@@ -64,33 +64,87 @@ class ClientController extends Controller
         return response()->json($client);
     }
 
-    public function updateFechaNacimiento(Request $request, $id)
+    public function updateDatosNombreGeneroFecha(Request $request, $id)
     {
         $client = Client::find($id);
-
+        if (!$client) {
+            return response()->json(['message' => 'Cliente no encontrado'], 404);
+        }
+    
+        $request->validate([
+            'NombreCompleto' => 'nullable|string|max:255',
+            'Genero' => 'nullable|string|in:Masculino,Femenino,Otro',
+            'FechaNacimiento' => 'nullable|date',
+        ]);
+    
+       
+        if ($request->has('NombreCompleto')) {
+            $client->user->update([
+                'NombreCompleto' => $request->input('NombreCompleto')
+            ]);
+        }
+    
+      
+        if ($request->has('Genero')) {
+            $client->update([
+                'Genero' => $request->input('Genero')
+            ]);
+        }
+    
+        if ($request->has('FechaNacimiento')) {
+            $client->update([
+                'FechaNacimiento' => $request->input('FechaNacimiento')
+            ]);
+        }
+    
+        return response()->json($client);
+    }
+    
+    public function updatePassword(Request $request, $id)
+    {
+        $client = Client::find($id);
+        if (!$client) {
+            return response()->json(['message' => 'Cliente no encontrado'], 404);
+        }
+    
+        $client->user->update([
+            'password' => bcrypt($request->input('password'))
+        ]);
+    
+        return response()->json($client);
+    }
+    
+    public function updateEmail(Request $request, $id)
+    {
+        $client = Client::find($id);
         if (!$client) {
             return response()->json(['message' => 'Cliente no encontrado'], 404);
         }
 
-        $client->update([
-            'FechaNacimiento' => $request->input('fecha_nacimiento')
+        $client->user->update([
+            'email' => $request->input('email')
         ]);
 
-        return response()->json($client);
-    }
 
-    public function updateGenero(Request $request, $id)
+        return response()->json($client);
+
+    }
+    
+    public function updateTelefono(Request $request, $id)
     {
         $client = Client::find($id);
-
         if (!$client) {
             return response()->json(['message' => 'Cliente no encontrado'], 404);
         }
 
-        $client->update([
-            'Genero' => $request->input('genero')
+        $client->user->update([
+            'Telefono' => $request->input('Telefono')
         ]);
 
+
         return response()->json($client);
+
     }
+
+
 }

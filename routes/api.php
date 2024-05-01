@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\CrewController;
 use App\Http\Controllers\Api\V1\FacilityController;
 use App\Http\Controllers\Api\V1\IncidentController;
 use App\Http\Controllers\Api\V1\RoleController;
+use App\Http\Controllers\Api\V1\ClientController;
 use App\Http\Controllers\Api\V1\TransitController;
  use App\Http\Controllers\Api\V1\BerthController;
 use App\Http\Controllers\Api\V1\DockController;
@@ -58,7 +59,6 @@ Route::group([
 Route::post('v1/plazaBase/{id}/administrativoyAmarre', [BaseBerthController::class, 'administrativoyAmarre']);
 Route::put('v1/plazaBase/{id}/updateCausa',[BaseBerthController::class , 'updateCausa']);
 Route::put('v1/plazaBase/{id}/actuFin',[BaseBerthController::class , 'actuFin']);
-
 Route::put('v1/plazaBase/{id}/eli',[BaseBerthController::class , 'eli']);
 
 
@@ -67,13 +67,9 @@ Route::put('v1/plazaBase/{id}/eli',[BaseBerthController::class , 'eli']);
 
 Route::get('v1/instalacion/{id}/pantalanes',[FacilityController::class , 'pantalanes']);
 Route::get('v1/pantalan/{id}/amarres',[DockController::class , 'amarres']);
-
 Route::get('v1/pantalan/{id}/amarres',[DockController::class , 'amarres']);
-
 Route::get('v1/embarcacion/{id}/titular', [BoatController::class , 'obtenerTitular']);
-
 Route::post('v1/plazaBase/alquiler/{id}',[BaseBerthController::class , 'alquiler']);
-
 Route::put('v1/plaza/{id}/actualizaEstadoOcupado',[BerthController::class , 'actualizaEstadoOcupado']);
 Route::put('v1/plaza/{id}/actualizaEstadoDisponible',[BerthController::class , 'actualizaEstadoDisponible']);
 
@@ -111,7 +107,6 @@ Route::get('v1/embarcacion/pais',[BoatController::class , 'pais']);
 Route::get('v1/embarcacion/tipocomun',[BoatController::class , 'tipocomun']);
 
 
-
 Route::post('v1/transito/crear',[BerthController::class ,'crear']);
 Route::get('v1/guardiaCivil/leido',[CivilGuardController::class , 'leido']);
 Route::put('v1/transito/cambiar/{id}',[BerthController::class , 'actualizaEstadoOcupado']);
@@ -126,7 +121,16 @@ Route::post('v1/tripulante/añadir',[CrewController::class , 'storeConId']);
 Route::delete('v1/borrar/tripulante/{id}',[CrewController::class , 'eliminar']);
 
 
+Route::put('v1/cliente/{id}/{datos}',[ClientController::class , 'updateDatosNombreGeneroFecha']);
+Route::put('v1/cliente/{id}/{password}',[ClientController::class , 'updatePassword']);
+Route::put('v1/cliente/{id}/{email}',[ClientController::class , 'updateEmail']);
+Route::put('v1/cliente/{id}/{telefono}',[ClientController::class , 'updateTelefono']);
 
+Route::apiResource('v1/tarjetas', App\Http\Controllers\Api\V1\CardController::class);
+Route::apiResource('v1/cliente', App\Http\Controllers\Api\V1\ClientController::class);
+Route::apiResource('v1/servicios', App\Http\Controllers\Api\V1\ServiceController::class);
+Route::apiResource('v1/pedidos', App\Http\Controllers\Api\V1\HireController::class);
+Route::apiResource('v1/ticket', App\Http\Controllers\Api\V1\TicketController::class);
 
 
 
