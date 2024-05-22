@@ -31,11 +31,11 @@
                 <td>{{ $servicio->Precio_mensual }}</td>
                 <td>{{ $servicio->Descripcion }}</td>
                 <td>
-                @if ($servicio->Imagen)
-              
-                <img src="{{asset('storage/servicios/'.basename($servicio->Imagen))}}"style='width:80px' >
-                @endif
-                
+                    @if ($servicio->Imagen)
+
+                    <img src="{{asset('storage/servicios/'.basename($servicio->Imagen))}}" style='width:80px'>
+                    @endif
+
                 </td>
             </tr>
             @endforeach
@@ -56,6 +56,14 @@
     });
 </script>
 
+@section('scroll-buttons')
+<div class="scrollUpContainer">
+    <img alt="scroll-up" src="/image/scrollUp.svg" class="scrollIcon" id="scrollUp" />
+</div>
+<div class="scrollDownContainer">
+    <img alt="scroll-down" src="/image/scrollDown.svg" class="scrollIcon" id="scrollDown" />
+</div>
+@endsection
 <style>
     .tablaRoles {
         padding: 50px;
@@ -69,7 +77,7 @@
         background-color: #426787 !important;
         color: #f5f7fa !important;
         font-family: "Questrial", sans-serif;
-       
+
 
     }
 
@@ -82,19 +90,19 @@
         background-color: #a6bed3 !important;
         color: black !important;
         font-weight: bold;
-        text-align: center!important;
+        text-align: center !important;
     }
 
     th {
         background-color: #a6bed3;
         color: black;
         font-weight: bold;
-        
+
     }
 
     .table-striped>tbody>tr:nth-child(odd)>td {
         background-color: #d0dce7;
-   
+
     }
 
     .enlaceCreateEmb {
@@ -132,7 +140,6 @@
         color: #000000;
         vertical-align: middle;
     }
-  
 </style>
 <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
 

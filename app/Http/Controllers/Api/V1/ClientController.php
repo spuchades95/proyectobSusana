@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Rental;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\V1\ClientResource;
+use Illuminate\Support\Facades\Log;
 class ClientController extends Controller
 {
    /**
@@ -45,8 +49,8 @@ class ClientController extends Controller
  */
     public function index()
     {
-        $clients = Client::with('user')->get();
-        return response()->json($clients);
+        $clients = Client::all();
+        return ClientResource::collection($clients);
     }
 
 
@@ -55,14 +59,16 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        $client = Client::with('user')->find($id);
-
-        if (!$client) {
-            return response()->json(['message' => 'Cliente no encontrado'], 404);
-        }
-
-        return response()->json($client);
+        $client = Client::findOrFail($id);
+        return new ClientResource($client);
     }
+
+    public static function getClientByUserId($userId)
+    {
+        $client = Client::where('Usuario_id', $userId)->first();
+        return new ClientResource($client);
+    }
+
 
     public function updateDatosNombreGeneroFecha(Request $request, $id)
     {
@@ -130,21 +136,56 @@ class ClientController extends Controller
 
     }
     
+    public function obtenerInformacionAlquileres($id)
+{
+   
+    Log::info($id);
+    $alquileres = Rental::join('base_berths', 'base_berths.id', '=', 'rentals.PlazaBase_id')
+        ->join('berths', 'berths.id', '=', 'base_berths.Amarre_id')
+        ->join('boats', 'boats.id', '=', 'rentals.Embarcacion_id')
+        ->select(
+            'rentals.FechaInicio',
+            'rentals.FechaFinalizacion',
+            'boats.Matricula',
+            'boats.Nombre AS NombreBarco',
+            'boats.Tipo AS TipoBarco',
+            'boats.Modelo',
+            'boats.Origen',
+            'boats.Eslora',
+            'boats.Manga',
+            'berths.Numero AS NumeroPlaza',
+            'base_berths.Amarre_id AS Plaza',
+            'boats.id'
+        )
+        ->where('berths.Estado', '=', 'Ocupado')
+        ->where('berths.TipoPlaza', '=', 'Plaza Base')
+        ->where('boats.Titular', '=', $id)
+        ->get();
+
+    return response()->json($alquileres, 200);
+}
+
+
+
     public function updateTelefono(Request $request, $id)
-    {
-        $client = Client::find($id);
-        if (!$client) {
-            return response()->json(['message' => 'Cliente no encontrado'], 404);
-        }
-
-        $client->user->update([
-            'Telefono' => $request->input('Telefono')
-        ]);
-
-
-        return response()->json($client);
-
+{
+  
+    $client = Client::find($id);
+    $request->validate([
+        'Telefono' => 'string'
+    ]);
+    Log::info($request);
+    Log::info($id);
+    if (!$client) {
+        return response()->json(['message' => 'Cliente no encontrado'], 404);
     }
+    Log::info($request->input('Telefono'));
+   
+    $client->user->Telefono = $request->input('Telefono');
+    $client->user->save();
+
+    return response()->json($client);
+}
 
 
 }

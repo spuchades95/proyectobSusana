@@ -68,83 +68,90 @@ class ServiceController extends Controller
      *                        type="string",
      *                        description="Descripción del servicio"
      *                
-    *                     )
- *                 )
- *             )
- *         )
- *     )
- * )
- */
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
     public function index()
     {
         return Service::all();
     }
 
-/**
- * @OA\Get(
- *     path="/api/v1/services/{service_id}",
- *     summary="Obtener un servicio por su ID",
- *     tags={"Servicios"},
- *     @OA\Parameter(
- *         name="service_id",
- *         in="path",
- *         description="ID del servicio a obtener",
- *         required=true,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Detalles del servicio",
- *         @OA\JsonContent(
- *             @OA\Property(
- *                 property="id",
- *                 type="integer",
- *                 description="ID único del servicio"
- *             ),
- *             @OA\Property(
- *                 property="Nombre",
- *                 type="string",
- *                 description="Nombre del servicio"
- *             ),
- *             @OA\Property(
- *                 property="Precio_unico",
- *                 type="number",
- *                 format="float",
- *                 description="Precio único del servicio"
- *             ),
- *             @OA\Property(
- *                 property="Precio_mensual",
- *                 type="number",
- *                 format="float",
- *                 description="Precio mensual del servicio"
- *             ),
- *             @OA\Property(
- *                 property="Mensaje_unico",
- *                 type="string",
- *                 description="Mensaje único del servicio"
- *             ),
- *             @OA\Property(
- *                 property="Mensaje_mensual",
- *                 type="string",
- *                 description="Mensaje mensual del servicio"
- *             ),
- *             @OA\Property(
- *                 property="Descripcion",
- *                 type="string",
- *                 description="Descripción del servicio"
- *             )
- *         )
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Servicio no encontrado"
- *     )
- * )
- */
-public function show($service_id)
-{
-    $service = Service::findOrFail($service_id);
-    return $service;
-}
+    /**
+     * @OA\Get(
+     *     path="/api/v1/services/{service_id}",
+     *     summary="Obtener un servicio por su ID",
+     *     tags={"Servicios"},
+     *     @OA\Parameter(
+     *         name="service_id",
+     *         in="path",
+     *         description="ID del servicio a obtener",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Detalles del servicio",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="id",
+     *                 type="integer",
+     *                 description="ID único del servicio"
+     *             ),
+     *             @OA\Property(
+     *                 property="Nombre",
+     *                 type="string",
+     *                 description="Nombre del servicio"
+     *             ),
+     *             @OA\Property(
+     *                 property="Precio_unico",
+     *                 type="number",
+     *                 format="float",
+     *                 description="Precio único del servicio"
+     *             ),
+     *             @OA\Property(
+     *                 property="Precio_mensual",
+     *                 type="number",
+     *                 format="float",
+     *                 description="Precio mensual del servicio"
+     *             ),
+     *             @OA\Property(
+     *                 property="Mensaje_unico",
+     *                 type="string",
+     *                 description="Mensaje único del servicio"
+     *             ),
+     *             @OA\Property(
+     *                 property="Mensaje_mensual",
+     *                 type="string",
+     *                 description="Mensaje mensual del servicio"
+     *             ),
+     *             @OA\Property(
+     *                 property="Descripcion",
+     *                 type="string",
+     *                 description="Descripción del servicio"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Servicio no encontrado"
+     *     )
+     * )
+     */
+    public function show($service_id)
+    {
+        $service = Service::findOrFail($service_id);
+        return $service;
+    }
 
+    
+    public function getRandomServices()
+    {
+        $services = Service::all();
+        $randomServices = $services->random(3);
+        return response()->json($randomServices);
+    }
 }

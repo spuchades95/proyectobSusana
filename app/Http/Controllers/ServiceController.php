@@ -29,7 +29,7 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info('Llamada desde store:',[$request]);
+       
         $request->validate([
             'Nombre' => 'required',
             'Precio_unico' => 'required',
@@ -40,7 +40,7 @@ class ServiceController extends Controller
             'Imagen' ,
 
         ]);
-        Log::info('Llamada desde store:', [$request]);
+       
         $servicio = new Service();
         $servicio->Nombre = $request->Nombre;
         $servicio->Precio_unico = $request->Precio_unico;

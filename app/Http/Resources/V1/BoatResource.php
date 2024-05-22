@@ -14,18 +14,21 @@ class BoatResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $matricula = $this->Matricula;
-        $origen = $this->Origen;
-        $nombre = $this->Nombre;
-        $titular = $this->Titular;
-        $registro = $this->Numero_registro;
-
+    
         return [
-            'Matricula' => $matricula,
-            'Origen' => $origen,
-            'Nombre' => $nombre,
-            'Titular' => $titular,
-            'Numero_registro' => $registro,
+            'id' => $this->id,
+            'Matricula' => $this->Matricula,
+            'Origen' => $this->Origen,
+            'Nombre' => $this->Nombre,
+            'Numero de registro' => $this->Numero_registro,
+            'Eslora' => $this->Eslora,
+            'Modelo' => $this->Modelo,
+            'Tipo' => $this->Tipo,
+            'Manga' => $this->Manga,
+
+
+
+            
         ];
         // return parent::toArray($request);
     }

@@ -13,12 +13,19 @@ class Ticket extends Model
         'FechaEmision',
         'Total',
         'Estado',
-        'Numero_Ticket'
+        'Numero_Ticket',
+        'Tarjeta_id'
      
     ];    
 
     public function ticketcontratado() {
         return $this->belongsTo(Hire::class, 'Ticket_id');
     }
+
+    public function tarjeta() {
+        return $this->belongsTo(Card::class, 'Tarjeta_id');
+    }
+
+
 
 }

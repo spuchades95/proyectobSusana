@@ -21,5 +21,9 @@ class Card extends Model
     {
         return $this->belongsTo(Client::class, 'Cliente_id');
     }
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 
 }

@@ -12,9 +12,14 @@ use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\ClientController;
 use App\Http\Controllers\Api\V1\TransitController;
  use App\Http\Controllers\Api\V1\BerthController;
+use App\Http\Controllers\Api\V1\CardController;
 use App\Http\Controllers\Api\V1\DockController;
 use App\Http\Controllers\Api\V1\CivilGuardController;
+use App\Http\Controllers\Api\V1\HireController;
 
+use App\Http\Controllers\Api\V1\ServiceController;
+use App\Http\Controllers\Api\V1\UserController as V1UserController;
+use App\Http\Controllers\UserController;
 use App\Models\Transit;
 
 /*
@@ -121,17 +126,25 @@ Route::post('v1/tripulante/añadir',[CrewController::class , 'storeConId']);
 Route::delete('v1/borrar/tripulante/{id}',[CrewController::class , 'eliminar']);
 
 
-Route::put('v1/cliente/{id}/{datos}',[ClientController::class , 'updateDatosNombreGeneroFecha']);
-Route::put('v1/cliente/{id}/{password}',[ClientController::class , 'updatePassword']);
-Route::put('v1/cliente/{id}/{email}',[ClientController::class , 'updateEmail']);
-Route::put('v1/cliente/{id}/{telefono}',[ClientController::class , 'updateTelefono']);
+Route::put('v1/cliente/{id}/datos',[ClientController::class , 'updateDatosNombreGeneroFecha']);
+Route::put('v1/cliente/{id}/password',[ClientController::class , 'updatePassword']);
+Route::put('v1/cliente/{id}/email',[ClientController::class , 'updateEmail']);
+Route::put('v1/cliente/{id}/telefono',[ClientController::class , 'updateTelefono']);
+Route::get('v1/cliente/{id}/byUserID',[ClientController::class , 'getClientByUserId']);
+Route::get('v1/cliente/{id}/barcos',[ClientController::class , 'obtenerInformacionAlquileres']);
+Route::get('v1/servicios/{clientId}/allcancel',[HireController::class , 'getServiceOfClientAllCancel']);
+Route::get('v1/servicios/{clientId}/all',[HireController::class , 'getServiceOfClient']);
+Route::put('v1/servicios/{id}/cancel',[HireController::class , 'putEstadoCancelado']);
+Route::get('v1/tarjetas/{clientId}/all',[CardController::class , 'getAllCardOfClient']);
+Route::get('v1/servicios/random',[ServiceController::class , 'getRandomServices']);
+Route::get('v1/tarjetas/{id}/{clienteId}',[CardController::class , 'getCardByIdAndClient']);
+Route::apiResource('v1/solicita', App\Http\Controllers\Api\V1\RequestsController::class);
 
 Route::apiResource('v1/tarjetas', App\Http\Controllers\Api\V1\CardController::class);
 Route::apiResource('v1/cliente', App\Http\Controllers\Api\V1\ClientController::class);
 Route::apiResource('v1/servicios', App\Http\Controllers\Api\V1\ServiceController::class);
 Route::apiResource('v1/pedidos', App\Http\Controllers\Api\V1\HireController::class);
 Route::apiResource('v1/ticket', App\Http\Controllers\Api\V1\TicketController::class);
-
 
 
 Route::apiResource('v1/usuario', App\Http\Controllers\Api\V1\UserController::class);

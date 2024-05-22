@@ -18,14 +18,13 @@ class BoatController extends Controller
 
      public function obtenerTitular( $id)
     {
+        $boat = Boat::where('id', $id)->first();
+
+        $cliente = $boat->cliente->user->NombreCompleto; 
         
-        $Titular = Boat::where('id', $id)->select('titular')->first();
 
-      
-        return response()->json( $Titular);
-
-
-
+  
+    return response()->json(  $cliente);
 
     }
 

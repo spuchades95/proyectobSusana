@@ -5,15 +5,10 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 class TicketController extends Controller
 {
-   
-    public function index()
-    {
-        $tickets = Ticket::all();
-        return response()->json($tickets);
-    }
+
     private function generaNumero()
     {
         $ultimoTicket = Ticket::max('Numero_Ticket');
@@ -31,15 +26,8 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'FechaEmision' => 'required|date',
-            'Total' => 'required|numeric|min:0',
-            'Estado' => 'required|string',
-        ]);
-
+        Log::info($request);
         $numeroTicket = $this->generaNumero();
-
-
         $ticketData = $request->all();
         $ticketData['Numero_Ticket'] = $numeroTicket;
         $ticket = Ticket::create($ticketData);

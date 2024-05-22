@@ -3,26 +3,33 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\CardResource;
 use App\Models\Card;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 class CardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function getAllCardOfClient($clientId)
     {
-        $clientId = $request->input('Cliente_id'); 
+      
+   
         $cards = Card::where('Cliente_id', $clientId)->get();
-        return response()->json($cards);
+  
+        if (!$cards) {
+            return response()->json(['message' => 'Tarjeta no encontrada para este cliente'], 404);
+        }
+
+        return CardResource::collection($cards);
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    { Log::info( $request ." store de tarjeta");
         $card = Card::create($request->all());
         return response()->json($card, 201);
     }
@@ -30,13 +37,17 @@ class CardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, $id)
-    {
-        $clientId = $request->input('Cliente_id'); 
-        $card = Card::where('id', $id)->where('Cliente_id', $clientId)->first();
-
+    public function getCardByIdAndClient( $id, $clientId)
+    {     
+        
+        Log::info( $clientId ." cliente");
+        Log::info( $id ." id");
+        $card = Card::where('id', $id)
+            ->where('Cliente_id', $clientId) 
+            ->first();
+        Log::info( $card);
         if (!$card) {
-            return response()->json(404);
+            return response()->json(['message' => 'Tarjeta no encontrada para este cliente'], 404);
         }
 
         return response()->json($card);
@@ -46,10 +57,10 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $clientId = $request->input('Client_id'); 
-        $card = Card::where('id', $id)->where('Cliente_id', $clientId)->first();
+      
+        $card = Card::where('id', $id);
 
         if (!$card) {
             return response()->json([

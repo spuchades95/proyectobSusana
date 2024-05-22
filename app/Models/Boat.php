@@ -36,7 +36,13 @@ class Boat extends Model
     }
     public function cliente()
     {
-        return $this->belongsTo(Client::class, 'Titular');
+        return $this->belongsTo(Client::class, 'Titular','id');
+    }
+
+
+    public function servicios()
+    {
+        return $this->belongsToMany(Service::class,'Requests', 'Embarcacion_id', 'Servicio_id');
     }
 
 }

@@ -19,7 +19,7 @@ class Client extends User
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'Usuario_id', 'id');
     }
     public function tarjetas()
     {
@@ -28,7 +28,7 @@ class Client extends User
 
     public function embarcaciones()
     {
-        return $this->hasMany(Boat::class, 'Cliente_id');
+        return $this->hasMany(Boat::class, 'Titular');
     }
 
 

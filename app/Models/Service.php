@@ -30,4 +30,8 @@ class Service extends Model
     }
 
 
+    public function embarcaciones()
+    {
+        return $this->belongsToMany(Boat::class,'Requests', 'Embarcacion_id', 'Servicio_id');
+    }
 }

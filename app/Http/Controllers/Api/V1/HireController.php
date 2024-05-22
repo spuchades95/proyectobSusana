@@ -3,56 +3,74 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\HireResource;
 use App\Models\Hire;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HireController extends Controller
 {
-   
- 
+
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'Cliente_id' => 'required|exists:clients,id',
-            'Servicio_id' => 'required|exists:services,id',
-            'Estado' => 'required|string|in:Procesando,Completado',
-            'FechaContratacion' => 'required|date',
-            'FechaFinalizacion' => 'required|date',
-        ]);
+        Log::info($request);
+
+
+        $pedidos = $request->all();
+
+
         $ultimoTicketId = Ticket::max('id');
-        $hire = new Hire();
-        $hire->Estado = $request->input('Estado');
-        $hire->FechaContratacion = $request->input('FechaContratacion');
-        $hire->FechaFinalizacion = $request->input('FechaFinalizacion');
-        $hire->Cliente_id = $request->input('Cliente_id');
-        $hire->Servicio_id = $request->input('Servicio_id');
-        $hire->Ticket_id = $ultimoTicketId;
-        $hire->save();
-        return response()->json($hire, 201);
+        foreach ($pedidos as $pedidoData) {
+
+            $hire = new Hire();
+            $hire->Estado = $pedidoData['Estado'];
+            $hire->FechaContratacion = $pedidoData['FechaContratacion'];
+            $hire->FechaFinalizacion = $pedidoData['FechaFinalizacion'];
+            $hire->Cliente_id = $pedidoData['Cliente_id'];
+            $hire->Servicio_id = $pedidoData['Servicio_id'];
+            $hire->Ticket_id = $ultimoTicketId;
+            $hire->save();
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function getServiceOfClient($clientId)
     {
-        $pedido = Hire::with(['cliente.user', 'servicio', 'ticket'])->findOrFail($id);
+        $servicio = Hire::where('Cliente_id', $clientId)->whereNotIn('Estado',  ['Cancelado'])->get();
+        if (!$servicio) {
+            return response()->json(['message' => 'Servicio no encontrado para este cliente'], 404);
+        }
 
-        $pedidoData = [
-            'id' => $pedido->id,
-            'FechaContratacion' => $pedido->FechaContratacion,
-            'Estado' => $pedido->Estado,
-            'Precio' => $pedido->ticket->Total,
-            'NumeroTicket' => $pedido->ticket->Numero_Ticket,
-            'Servicio' => $pedido->servicio->Nombre,
-            'Cliente' => $pedido->cliente->user->NombreCompleto,
-        ];
-
-        return response()->json($pedidoData);
+        return HireResource::collection($servicio);
     }
 
+    public function getServiceOfClientAllCancel($clientId)
+    {
+        $servicio = Hire::where('Cliente_id', $clientId)->where('Estado',  ['Cancelado'])->get();
+        if (!$servicio) {
+            return response()->json(['message' => 'Servicio no encontrado para este cliente'], 404);
+        }
+
+        return HireResource::collection($servicio);
+    }
+
+
+    public function putEstadoCancelado($id)
+    {
+        $servicio = Hire::find($id);
+
+        if (!$servicio) {
+            return response()->json(['message' => 'No se pudo cambiar'], 404);
+        }
+        $servicio->Estado = 'Cancelado';
+        $servicio->save();
+        return response()->json(['message' => 'Estado cambiado exitosamente'], 200);
+    }
 }
