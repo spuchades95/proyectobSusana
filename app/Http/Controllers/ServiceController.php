@@ -87,13 +87,13 @@ class ServiceController extends Controller
         $servicio->update($request->all());
         Log::info('Llamada desde update:', [$request]);
         if ($request->hasFile('Imagen')) {
-            // Eliminar la imagen anterior si existe
+           
             if ($servicio->Imagen) {
            
                 Storage::delete($servicio->Imagen);
             }
            
-            // Guardar la nueva imagen
+        
             $imagenPath = $request->file('Imagen')->store('public/servicios');
             $servicio->Imagen =  Storage::url($imagenPath);
         }
