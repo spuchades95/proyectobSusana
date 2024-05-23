@@ -63,9 +63,6 @@
         });
         new DataTable('.table');
 
-
-
-
     });
 </script>
 
