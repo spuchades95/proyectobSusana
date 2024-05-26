@@ -32,7 +32,7 @@ class Boat extends Model
 
     public function embarcacion()
     {
-        return $this->belongsToMany(BaseBerth::class, 'Rentals', 'PlazaBase_id', 'Embarcacion_id');
+        return $this->belongsToMany(BaseBerth::class, 'rentals', 'PlazaBase_id', 'Embarcacion_id');
     }
     public function cliente()
     {
@@ -42,7 +42,7 @@ class Boat extends Model
 
     public function servicios()
     {
-        return $this->belongsToMany(Service::class,'Requests', 'Embarcacion_id', 'Servicio_id');
+        return $this->belongsToMany(Service::class,'requests', 'Embarcacion_id', 'Servicio_id');
     }
 
 }
