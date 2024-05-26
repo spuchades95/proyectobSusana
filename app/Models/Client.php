@@ -34,11 +34,11 @@ class Client extends User
 
     public function servicios()
     {
-        return $this->belongsToMany(Service::class, 'Hires', 'Cliente_id', 'Servicio_id');
+        return $this->belongsToMany(Service::class, 'hires', 'Cliente_id', 'Servicio_id');
     }
     public function tickets()
     {
-        return $this->hasManyThrough(Ticket::class, Hire::class, 'Hires', 'Cliente_id', 'Ticket_id');
+        return $this->hasManyThrough(Ticket::class, Hire::class, 'hires', 'Cliente_id', 'Ticket_id');
     }
 
 }

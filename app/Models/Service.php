@@ -22,16 +22,16 @@ class Service extends Model
 
     public function contrata()
     {
-        return $this->belongsToMany(Client::class, 'Hires', 'Cliente_id', 'Servicio_id');
+        return $this->belongsToMany(Client::class, 'hires', 'Cliente_id', 'Servicio_id');
     }
     public function gestionado()
     {
-        return $this->belongsToMany(Manager::class, 'Manages', 'Gestor_id', 'Servicio_id');
+        return $this->belongsToMany(Manager::class, 'manages', 'Gestor_id', 'Servicio_id');
     }
 
 
     public function embarcaciones()
     {
-        return $this->belongsToMany(Boat::class,'Requests', 'Embarcacion_id', 'Servicio_id');
+        return $this->belongsToMany(Boat::class,'requests', 'Embarcacion_id', 'Servicio_id');
     }
 }

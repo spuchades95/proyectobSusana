@@ -29,7 +29,7 @@ class BaseBerth extends Model
 
     public function embarcacion()
     {
-        return $this->belongsToMany(Boat::class, 'Rentals', 'PlazaBase_id', 'Embarcacion_id');
+        return $this->belongsToMany(Boat::class, 'rentals', 'PlazaBase_id', 'Embarcacion_id');
     }
 
 
