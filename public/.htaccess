@@ -1,5 +1,5 @@
 <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "https://proyectosusana.pages.dev"
+    Header set Access-Control-Allow-Origin "*"
     Header set Access-Control-Allow-Methods "GET, POST, PATCH, PUT, DELETE, OPTIONS"
     Header set Access-Control-Allow-Headers "Origin, Content-Type, X-Auth-Token"
 </IfModule>
@@ -11,20 +11,16 @@
 
     RewriteEngine On
 
-    # Redirigir todas las solicitudes HTTP a HTTPS
-    RewriteCond %{HTTPS} off
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-    # Manejar el encabezado de autorización
+    # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirigir barras inclinadas finales si no es una carpeta...
+    # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
-    # Enviar solicitudes al controlador frontal...
+    # Send Requests To Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
