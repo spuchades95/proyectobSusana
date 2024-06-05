@@ -91,7 +91,7 @@ $idamarre= $id;
            
         )
         ->whereIn('rentals.id', function ($query) {
-            $query->selectRaw('MIN(id)')
+            $query->selectRaw('MAX(id)')
                 ->from('rentals')
                 ->groupBy('PlazaBase_id');
         }) 
