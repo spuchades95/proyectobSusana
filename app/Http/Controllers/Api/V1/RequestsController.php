@@ -22,6 +22,8 @@ class RequestsController extends Controller
             $hire->FechaContratacion = $servicioData['FechaContratacion'];
             $hire->Embarcacion_id = $servicioData['Embarcacion_id'];
             $hire->Servicio_id = $servicioData['Servicio_id'];
+	$hire-> save();
+
         }
 
         return response()->json($salida, 201);
